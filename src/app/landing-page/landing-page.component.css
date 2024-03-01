@@ -1,0 +1,62 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  background-image: url("src/images/scenesbackground.jpg");
+  background-size: cover;
+  background-position: center;
+  display: table;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.title {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+h1 {
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 4em; /* Adjust the font size as needed */
+}
+
+.buttons {
+  horiz-align: center;
+}
+
+button {
+  font-family: 'Montserrat';
+  padding: 10px 20px;
+  margin: 7px;
+  font-size: 16px;
+  background-color: transparent;
+  background-blend-mode: darken;
+  border: 1px solid aliceblue;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: rgba(228, 220, 224, 0.3);
+  color: white;
+  border: none;
+  transform: scale(1.1);
+}

@@ -1,0 +1,52 @@
+
+<div class="container">
+  <div class="card">
+
+    <div class="form">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" formControlName="firstName" required>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" formControlName="lastName" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" required>
+
+<!--        <div [ngClass]="{ 'error': myForm.get('password')?.hasError('')}"-->
+        <div *ngIf="myForm.hasError('passwordMismatch') && myForm.get('confirmPassword')?.touched" style="color: red">
+          Passwords do not match.
+        </div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="text" id="confirmPassword" formControlName="confirmPassword" required>
+
+
+        <div [ngClass]="{ 'error': myForm.get('DOB')?.hasError('minAge') }">
+          <div *ngIf="myForm.get('DOB')?.hasError('minAge')" style="color: red">
+            Must be at least {{ myForm.get('DOB')?.getError('minAge')?.requiredAge }} years old.
+          </div>
+          <label for="DOB">Date of Birth</label>
+          <input type="date" id="DOB" formControlName="DOB" required>
+        </div>
+
+
+
+        <div class="btn-container">
+
+          <button id="back" type="button" (click)="backToLanding()">Back</button>
+          <button type="submit">REGISTER</button>
+          <div class="login-container">
+<!--            <label id="loginBtnLabel" for="loginBtn">Already have an Account?</label>-->
+            <button id="loginBtn" (click)="goToLogin()" type="button">LOGIN</button>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
