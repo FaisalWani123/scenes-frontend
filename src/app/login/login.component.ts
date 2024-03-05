@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../Entities/user';
+import {BackendServiceService} from '../services/backend-service.service';
+import {DialogService} from '../services/dialog.service';
+import {TokenServiceService} from '../services/token-service.service';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +13,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   myForm!: FormGroup;
+  user: User = new User();
 
-  constructor(private router: Router, private formBuilder: FormBuilder) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private backendService: BackendServiceService,
+              private dialogService: DialogService, private tokenService: TokenServiceService) { }
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
@@ -23,13 +29,38 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line:typedef
   onSubmit() {
     if (this.myForm.valid){
-      console.log(this.myForm.value);
+      this.user = this.buildUser();
+      this.backendService.login(this.user).subscribe(
+        (response: any) => {
+          // Success callback
+          const token = response.token;
+          const firstName = response.firstName;
+          const lastName = response.lastName;
+          if (token != null){
+            this.tokenService.setToken(token, firstName, lastName);
+            this.router.navigate(['/main-page']);
+          }
+        },
+        (error) => {
+          // Error callback
+          const errorStatus = error.status;
+          if (errorStatus === 403){
+            this.dialogService.openGeneralErrorDialog('Incorrect Credentials');
+          }
+        }
+      );
+      // console.log(this.user);
     }else{
-      console.log('incorrect credentials');
+      this.dialogService.openGeneralErrorDialog('Please input your Credentials');
     }
 
   }
-
+  // tslint:disable-next-line:typedef
+  buildUser(){
+    this.user.email = this.myForm.get('email')?.value;
+    this.user.password = this.myForm.get('password')?.value;
+    return this.user;
+  }
   // tslint:disable-next-line:typedef
   backToLanding() {
     this.router.navigate(['/landing-page']);

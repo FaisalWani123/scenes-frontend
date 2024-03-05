@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {BackendServiceService} from '../services/backend-service.service';
+import {User} from '../Entities/user';
+import {DialogService} from '../services/dialog.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import {ThankyouDialogComponent} from '../thankyou-dialog/thankyou-dialog.component';
 
 @Component({
   selector: 'app-register',
@@ -10,8 +15,10 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
   myForm!: FormGroup;
 
+  user: User = new User();
   constructor(private formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router, private backendService: BackendServiceService,
+              private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
@@ -59,16 +66,64 @@ export class RegisterComponent implements OnInit {
     };
   }
 
+  // tslint:disable-next-line:typedef
+  buildUser(){
+    this.user.firstName = this.myForm.get('firstName')?.value;
+    this.user.lastName = this.myForm.get('lastName')?.value;
+    this.user.email = this.myForm.get('email')?.value;
+    this.user.dob = this.myForm.get('DOB')?.value;
+    this.user.password = this.myForm.get('password')?.value;
+    return this.user;
+  }
 
   // tslint:disable-next-line:typedef
   onSubmit() {
     // @ts-ignore
     if (this.myForm.valid){
-      console.log(this.myForm.value);
+      this.user = this.buildUser();
+      this.doesUserExist();
+
+      // console.log(this.user);
     }else{
       console.log('please check your details');
     }
 
+  }
+
+  doesUserExist(): void{
+    this.backendService.doesUserExist(this.user.email).subscribe(
+      (response) => {
+        // Handle the response here
+        if (response === null){
+          this.registerUser();
+        }
+      },
+      (error) => {
+        // Handle errors here
+        const statusCode = error.status;
+        if (statusCode === 400){
+          this.dialogService.openGeneralErrorDialog('Email already exists');
+        }
+
+      }
+    );
+  }
+
+  registerUser(): void{
+    this.backendService.registerUser(this.user).subscribe(
+      (response: any) => {
+        // Success callback
+        const token = response.token;
+        if (token != null){
+          this.dialogService.openThankYouDialog();
+        }
+      },
+      (error) => {
+        // Error callback
+        console.error('Error:', error);
+        // Handle error scenarios
+      }
+    );
   }
 
   // tslint:disable-next-line:typedef

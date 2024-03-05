@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TokenServiceService} from '../services/token-service.service';
 
 @Component({
   selector: 'app-main-page',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tokenService: TokenServiceService) { }
+
+  token = this.tokenService.getToken();
+  firstName = this.tokenService.getFirstName();
+  lastName = this.tokenService.getLastName();
 
   ngOnInit(): void {
   }

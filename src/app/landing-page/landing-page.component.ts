@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import {BackendServiceService} from '../backend-service.service';
+import {BackendServiceService} from '../services/backend-service.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,9 +13,15 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.backendService.getData().subscribe((data) => {
-      console.log(data);
-    });
+    // this.backendService.getData().subscribe(
+    //   (data) => {
+    //     console.log('Response:', data);
+    //     // Handle the text response here
+    //   },
+    //   (error) => {
+    //     console.error('Error:', error);
+    //   }
+    // );
 
   }
 
