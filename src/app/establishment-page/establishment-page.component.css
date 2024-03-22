@@ -119,14 +119,14 @@ a {
   }
 }
 
-.app-body-navigation {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  @media (max-width: 1200px) {
-    display: none;
-  }
-}
+/*.app-body-navigation {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: space-between;*/
+/*  @media (max-width: 1200px) {*/
+/*    display: none;*/
+/*  }*/
+/*}*/
 
 .app-body-sidebar {
 }
@@ -428,12 +428,23 @@ a {
   margin-top: 1.5rem;
 }
 
+
 .payment {
+  border-bottom: ghostwhite 1px solid;
+  justify-content: space-between;
+  h2{
+
+    display: flex;
+    align-items: center;
+    font-family: "Felix Titling";
+    font-size: 14px;
+  }
+  button{
+
+  }
   display: flex;
   align-items: center;
-  & + * {
-    margin-top: 1rem;
-  }
+
 }
 
 .card {
@@ -492,90 +503,111 @@ a {
   }
 }
 
-.filter-options {
-  margin-left: 1.25rem;
-  padding-left: 1.25rem;
-  border-left: 1px solid #313131;
-  display: flex;
-  align-items: center;
-  flex: 1 1 auto;
 
-  p {
-    & + * {
-      margin-left: auto;
-      margin-right: 0.75rem;
-    }
-    color: lightgray;
-    font-size: 0.875rem;
-    @media (max-width: 1000px) {
-      display: none;
-    }
+
+/*.packages {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  margin-top: 1.5rem;*/
+/*}*/
+
+/*.packageList {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  width: 100%;*/
+/*  font-size: 0.875rem;*/
+/*}*/
+
+/*.package-details {*/
+/*  background: rgba(255,255,255,0.1);*/
+/*  padding-left: 10px;*/
+/*  padding-right: 10px;*/
+/*  padding-top: 10px;*/
+/*  padding-bottom: 10px;*/
+/*  border-radius: 20px;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: space-between;*/
+
+/*  div{*/
+/*    border-right: white 1px solid;*/
+/*  }*/
+
+/*  flex: 1;*/
+
+/*  h4{*/
+/*    color: white;*/
+/*    padding-right: 15px;*/
+
+/*  }*/
+
+/*}*/
+
+.packages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust as needed */
+  gap: 20px;
+}
+
+.packageList {
+  /*background-color: #f4f4f4; !* Change background color as needed *!*/
+  border-radius: 10px;
+  display: grid;
+
+}
+
+.package-card-container {
+  padding: 10px;
+  background: rgba(255,255,255);
+  border-radius: 10px;
+  max-height: 135px;
+  &:hover{
+    /*box-shadow: 4px 4px 8px rgba(255, 255, 255, 1);*/
+    border-radius: 30px;
+    /*transform: scale(1.05);*/
+    background: white;
+    cursor: pointer;
   }
 }
 
-.transfers {
+.package-card-content {
   display: flex;
   flex-direction: column;
-  margin-top: 1.5rem;
+  max-height: 100%;
+  max-width: 100%;
+
 }
 
-.transfer {
+.package-title h4 {
+  margin-bottom: 10px;
+  font-family: "Felix Titling";
+  text-align: center;
+  font-weight: bold;
+  color: #333; /* Title color */
+}
+
+.package-general-details {
   display: flex;
-  align-items: center;
-  width: 100%;
-  font-size: 0.875rem;
-  @media (max-width: 1000px) {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  & + * {
-    margin-top: 2rem;
-  }
+  justify-content: space-evenly;
+  /*margin-bottom: 10px;*/
 }
 
-.transfer-logo {
-  background-color: #f1f1f1;
-  border-radius: 4px;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 45%;
-  }
+.package-general-details h5 {
+  color: black; /* Details color */
+  font-family: Monaco;
+  font-size: 16px;
+}
+.package-description{
+
+}
+.package-description h5 {
+  color: black; /* Description color */
+  text-align: center;
+  font-family: Monaco;
+  font-size: 14px;
+  /*margin-bottom: 10px;*/
 }
 
-.transfer-details {
-  margin-left: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  @media (max-width: 1000px) {
-    flex-wrap: wrap;
-    margin-left: 0;
-    margin-top: 1rem;
-  }
-  div {
-    width: calc(100% / 3 - 1rem);
-    @media (max-width: 1000px) {
-      width: 100%;
-    }
-    & + div {
-      margin-left: 1rem;
-      @media (max-width: 1000px) {
-        margin-left: 0;
-        margin-top: 1rem;
-      }
-    }
-  }
-
-  dd {
-    color: #969593;
-    margin-top: 2px;
-  }
-}
 
 .transfer-number {
   margin-left: 2rem;
@@ -730,6 +762,7 @@ button {
 
 h2{
   color: white;
+  font-family: Monaco;
 }
 
 dt{
@@ -750,276 +783,155 @@ label{
 
 
 .tiles {
-  padding: 5px;
   background: transparent;
   border-radius: 15px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 1rem;
-  row-gap: 1rem;
-  margin-top: 1.25rem;
-  @media (max-width: 700px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
 }
-.price{
-  display: none;
-  position: absolute;
-}
+
 .tile {
-  text-decoration: none;
-  max-width: 250px;
-  padding: 0;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  background-position: center;
-  background-size: cover;
-  color: white;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  transition: 0.75s ease;
-  overflow: hidden; /* Add overflow property to hide the absolute positioned content */
-
-  &:hover {
-    transform: translateY(-5px);
-    background-color: rgba(238, 237, 236, 1);
-    color: black;
-    cursor: pointer;
-    /*height: auto; !* Set height to auto on hover to accommodate .information *!*/
-
-    .tile-header{
-      display: none;
-    }
-    .price {
-      display: block;
-      margin-top: 0;
-      padding-top: 5px;
-      background-color: rgba(238, 237, 236, 0.8);
-      border-radius: 15px;
-      border-bottom-left-radius: 0px;
-      font-weight: bold;
-      color: black;
-      font-family: Monaco;
-    }
-
-    .information {
-      display: block;
-      padding: 5px;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(238, 237, 236, 1);
-      border-radius: 15px;
-      padding-top: 10px;
-
-      h4{
-        display: flex;
-        flex-direction: column;
-
-        .information-title{
-          font-size: 16px;
-          font-family: "Felix Titling";
-
-        }
-
-        .information-more{
-          font-size: 12px;
-          font-family: monospace;
-          border-bottom: 1px solid #2e2e2e;
-          padding-bottom: 0;
-        }
-
-      }
-    }
-
-    .information .cuisine{
-      white-space: nowrap; /* Ensures text is on a single line without wrapping */
-      overflow: hidden;    /* Hides text that overflows the container */
-      text-overflow: ellipsis;
-      font-family: Monaco;
-
-    }
-
-    .information .area{
-      white-space: nowrap; /* Ensures text is on a single line without wrapping */
-      overflow: hidden;    /* Hides text that overflows the container */
-      text-overflow: ellipsis;
-      font-family: Monaco;
-      font-size: 14px;
-    }
-  }
-
-  &:focus-within {
-    box-shadow: 0 0 0 2px #1f1f1f, 0 0 0 4px #e3ffa8;
-  }
-
-  a {
-    text-decoration: none;
+  max-width: 700px;
+  .content-container{
+    /*max-width: 95%;*/
+    background: rgba(255,255,255,0.05);
+    border-radius: 25px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-weight: 400;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 5px;
-
-    .icon-button {
-      color: inherit;
-      border-color: inherit;
-      &:hover,
-      &:focus {
-        background-color: transparent;
-        i {
-          transform: none;
-        }
-      }
-    }
-
-    &:focus {
-      box-shadow: none;
-    }
-
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+    margin-bottom: 25px;
+    &:hover{
+      background: rgba(255,255,255,0.1);
     }
   }
-}
-
-
-.tile-img{
-  padding: 0;
-  background-position:center;
-  background-size: cover;
-  max-height: 250px;
-  max-width: 250px;
-  min-height: 150px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-
-
-}
-
-.tile-img img{
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  /*min-height: 100%*/
-  height: 250px;
-  width: 250px;
-  object-fit: cover;
-}
-
-.tile-header {
-  display: flex;
-  align-items: center;
-  i {
-    font-size: 2.5em;
-  }
-
-  h3 {
-    margin-top: 5px;
+  .est-name{
     display: flex;
-    flex-direction: column;
-    line-height: 1.5;
-    margin-left: 0.5rem;
-    .information-title{
+    justify-content: center;
+    font-family: "Felix Titling";
+    font-size: 26px;
+  }
+
+  .image-container{
+    /*padding: 10px;*/
+    margin-right: 20px;
+    max-height: 350px;
+    max-width: 350px;
+    display: flex;
+
+  }
+
+  .image-container img{
+    border-radius: 25px;
+    object-fit: cover;
+
+  }
+
+  .details-container{
+    margin-top: 3%;
+    .est-rating{
+      margin-top: 15px;
+      font-size: 20px;
       font-family: "Felix Titling";
     }
+    .est-cuisine{
+      font-family: "Felix Titling";
+      font-size: 14px;
+      max-width: 90%;
+      text-overflow: ellipsis;
+    }
+    .est-area{
+      font-family: "Felix Titling";
+      font-size: 14px;
+      text-overflow: fade;
+    }
+    font-family: Monaco;
+    color: white;
+    font-size: 14px;
 
-    .information-more{
-      font-family: Monaco;
-      font-size: 12px;
-      letter-spacing: 0.8px;
-      font-weight: lighter;
+  }
+}
+.payment{
+  max-width: 350px;
+  .invite-btn{
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 15px;
+    background: transparent;
+    color: white;
+
+    &:hover{
+      cursor: pointer;
+      color: black;
+      background: rgba(255,255,255,0.8);
     }
   }
 }
-
-.information{
-  display: none;
-  position: absolute;
-}
-
-/* main-page.component.css */
-.mat-paginator {
+.friend-profile {
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-
-.mat-paginator-page-size {
-  margin-right: 20px; /* Adjust spacing between page size and page range */
-}
-
-.mat-paginator-range-label,
-.mat-paginator-page-size-label {
-  color: #333; /* Change the color of the label text */
-}
-
-.mat-paginator-page-size-option {
-  color: #007bff; /* Change the color of the page size options */
-  font-weight: bold; /* Make the page size options bold */
-}
-
-.mat-paginator-navigation {
-  background-color: #f0f0f0; /* Change the background color of navigation buttons */
-  border-radius: 5px; /* Add border radius to navigation buttons */
-  margin: 0 5px; /* Adjust spacing between navigation buttons */
-}
-
-.mat-paginator-navigation-disabled {
-  opacity: 0.5; /* Reduce opacity for disabled navigation buttons */
-}
-
-.mat-paginator-page {
-  color: #007bff; /* Change the color of page numbers */
-}
-
-.mat-paginator-page.mat-paginator-page-active {
-  background-color: #007bff; /* Change the background color of active page */
-  color: #fff; /* Change the text color of active page */
-  border-radius: 50%; /* Make active page number circular */
-}
-
-.category-select select {
-  appearance: none; /* Remove default styles */
-  border: none; /* Add border */
-  padding: 10px; /* Add padding */
-  font-size: 16px; /* Set font size */
-  border-radius: 0px; /* Add border radius */
-  color: rgba(255,255,255,0.8);
-  cursor: pointer; /* Change cursor on hover */
+  border: 0;
   background: transparent;
-  font-family: "Felix Titling";
+  cursor: pointer;
+  color: #969593;
+  transition: 0.25s ease;
 
+  &:hover,
+  &:focus {
+    color: #ffffff;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1.5rem; /* Adjust as needed */
+    flex-shrink: 0;
+  }
+
+  span:first-child {
+    font-size: 1.125rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #313131;
+    font-weight: 300;
+  }
 }
 
-.category-select select:hover {
-  background: rgba(255,255,255, 0.4);
+.scene-builder {
+  margin-left: 10%;
+  max-width: 75%;
+  background: rgba(255,255,255, 0.05);
+  border-radius: 25px;
+  background-blend-mode: luminosity;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the contents horizontally */
+  .scene-title{
+    margin-top: 10px;
+    font-family: "Felix Titling";
+    color: white;
+    font-size: 26px;
+  }
+
+  &:hover{
+    background: rgba(255,255,255,0.1);
+  }
 }
 
-.category-select select:focus {
-  outline: none; /* Remove focus outline */
-  background: black;
-  border: none;
+
+.scene-details {
+  display: flex;
+  justify-content: space-between; /* Separate into two columns */
+  width: 50%; /* Adjust width as needed */
 }
 
-/* Style the options */
-.category-select select option:hover {
-  background-color: transparent !important; /* Prevent background color change on hover */
-  appearance: none;
+.package-column,
+.guest-list-column {
+  width: 45%; /* Adjust column width as needed */
 }
-
-
 
 
 

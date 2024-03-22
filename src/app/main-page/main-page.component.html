@@ -15,7 +15,7 @@
         <a href="#" class="active">
           Dashboard
         </a>
-        <a href="#">
+        <a (click)="goToSceneBuilder()">
           Scene Builder
         </a>
         <a href="#">
@@ -34,7 +34,7 @@
     </div>
     <div class="app-header-actions">
       <button class="user-profile">
-        <span>{{firstName}} {{lastName}}</span>
+        <span>{{ user?.firstName?.toUpperCase() }} {{user?.lastName?.toUpperCase()}}</span>
         <span>
 					<img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
 				</span>
@@ -97,22 +97,19 @@
       <section class="service-section">
         <h2>Hot Tonight</h2>
         <div class="service-section-header">
+          <div class="category-select">
+            <select [(ngModel)]="selectedOption">
+              <option value="name">NAME</option>
+              <option value="cuisine">CUISINE</option>
+              <option value="area">AREA</option>
+            </select>
+          </div>
           <div class="search-field">
             <i class="ph-magnifying-glass"></i>
-            <input type="text" placeholder="Search">
+            <input type="text" placeholder="Search" style="color: white; text-transform: uppercase;" [(ngModel)]="searchTerm" (input)="filterEstablishments()">
           </div>
-          <div class="dropdown-field">
-<!--            need to make this a toggle for 18+ or not-->
-            <select>
-              <option>Yes</option>
-              <option>No</option>
-            </select>
-            <i class="ph-caret-down"></i>
-          </div>
-          <button class="flat-button">
-            Search
-          </button>
         </div>
+
         <div class="mobile-only">
           <button class="flat-button">
             Toggle search
@@ -121,59 +118,42 @@
 
 <!--        where all the establishments will go-->
         <div class="tiles">
-
-          <article class="tile">
+          <a *ngFor="let establishment of pagedEstablishments" (click)="buildScene(establishment)" class="tile">
+            <div class="tile-img">
+              <img [src]="establishment.imageUrl" alt="{{ establishment.name }}">
+            </div>
             <div class="tile-header">
               <i class="ph-lightning-light"></i>
               <h3>
-                <span>Bohca</span>
-                <span>Free Entry until 10:00 PM</span>
+                <span class="information-title">{{ establishment.name }}</span>
+                <span class="information-more"> {{ establishment.rating }}★</span>
               </h3>
             </div>
-            <a href="#">
-              <span>Book</span>
-              <span class="icon-button">
-								<i class="ph-caret-right-bold"></i>
-							</span>
-            </a>
-          </article>
-
-          <article class="tile">
-            <div class="tile-header">
-              <i class="ph-fire-simple-light"></i>
-              <h3>
-                <span>Red</span>
-                <span>Gordon Ramsay Live Experience</span>
-              </h3>
+            <div class="price">
+              <a>
+                <span> ₹{{ establishment.avgCostForTwo }} For Two</span>
+              </a>
             </div>
-            <a href="#">
-              <span>Book</span>
-              <span class="icon-button">
-								<i class="ph-caret-right-bold"></i>
-							</span>
-            </a>
-          </article>
-          <article class="tile">
-            <div class="tile-header">
-              <i class="ph-file-light"></i>
-              <h3>
-                <span>Khubani</span>
-                <span>Drizzy Drake + Free drinks</span>
-              </h3>
+            <div class="information">
+              <h4>
+                <span class="information-title">{{ establishment.name }}</span>
+                <span class="information-more"> {{ establishment.rating }}★</span>
+              </h4>
+              <h5 class="cuisine">{{ establishment.cuisine }}</h5>
+              <h5 class="area">{{ establishment.area }}</h5>
             </div>
-            <a href="#">
-              <span>Book</span>
-              <span class="icon-button">
-								<i class="ph-caret-right-bold"></i>
-							</span>
-            </a>
-          </article>
+          </a>
         </div>
+        <mat-paginator [length]="establishments.length"
+                       [pageSize]="pageSize"
+                       (page)="onPageChange($event)">
+        </mat-paginator>
 
 
         <div class="service-section-footer">
           <p>Services are paid according to the current state of the currency and tariff.</p>
         </div>
+
       </section>
       <section class="transfer-section">
         <div class="transfer-section-header">

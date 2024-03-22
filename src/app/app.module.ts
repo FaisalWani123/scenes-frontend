@@ -13,6 +13,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ThankyouDialogComponent } from './thankyou-dialog/thankyou-dialog.component';
 import { GeneralErrorDialogComponent } from './general-error-dialog/general-error-dialog.component';
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { EstablishmentPageComponent } from './establishment-page/establishment-page.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { GeneralErrorDialogComponent } from './general-error-dialog/general-erro
     MainPageComponent,
     ThankyouDialogComponent,
     GeneralErrorDialogComponent,
+    EstablishmentPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { GeneralErrorDialogComponent } from './general-error-dialog/general-erro
     HttpClientModule,
     FormsModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

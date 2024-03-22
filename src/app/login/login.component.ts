@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../Entities/user';
-import {BackendServiceService} from '../services/backend-service.service';
-import {DialogService} from '../services/dialog.service';
-import {TokenServiceService} from '../services/token-service.service';
+import {User} from '../Entities/user/user';
+import {BackendServiceService} from '../services/generalBackendServices/backend-service.service';
+import {DialogService} from '../services/dialogServices/dialog.service';
+import {TokenServiceService} from '../services/tokenServices/token-service.service';
 
 @Component({
   selector: 'app-login',
@@ -34,10 +34,9 @@ export class LoginComponent implements OnInit {
         (response: any) => {
           // Success callback
           const token = response.token;
-          const firstName = response.firstName;
-          const lastName = response.lastName;
+          const email = response.email;
           if (token != null){
-            this.tokenService.setToken(token, firstName, lastName);
+            this.tokenService.setToken(token, email);
             this.router.navigate(['/main-page']);
           }
         },

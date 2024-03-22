@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {BackendServiceService} from '../services/backend-service.service';
-import {User} from '../Entities/user';
-import {DialogService} from '../services/dialog.service';
+import {BackendServiceService} from '../services/generalBackendServices/backend-service.service';
+import {User} from '../Entities/user/user';
+import {DialogService} from '../services/dialogServices/dialog.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import {ThankyouDialogComponent} from '../thankyou-dialog/thankyou-dialog.component';
 

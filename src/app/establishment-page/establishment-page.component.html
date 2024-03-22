@@ -1,0 +1,177 @@
+<div class="app">
+  <header class="app-header">
+    <div class="app-header-logo">
+      <div class="logo">
+				<span class="logo-icon">
+					<img src="https://assets.codepen.io/285131/almeria-logo.svg" />
+				</span>
+        <h1 class="logo-title">
+          <span>Scenes</span>
+        </h1>
+      </div>
+    </div>
+    <div class="app-header-navigation">
+      <div class="tabs">
+        <a (click)="backtoDash()">
+          Dashboard
+        </a>
+        <a href="#" class="active">
+          Scene Builder
+        </a>
+        <a href="#">
+          BeReal
+        </a>
+        <a href="#">
+          Account
+        </a>
+        <a href="#">
+          Payments
+        </a>
+        <a href="#">
+          Business
+        </a>
+      </div>
+    </div>
+    <div class="app-header-actions">
+      <button class="user-profile">
+        <span>{{user?.firstName}} {{user?.lastName}}</span>
+        <span>
+					<img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+				</span>
+      </button>
+      <div class="app-header-actions-buttons">
+        <button class="icon-button large">
+          <i class="ph-magnifying-glass"></i>
+        </button>
+        <button class="icon-button large">
+          <i class="ph-bell"></i>
+        </button>
+      </div>
+    </div>
+    <div class="app-header-mobile">
+      <button class="icon-button large">
+        <i class="ph-list"></i>
+      </button>
+    </div>
+
+  </header>
+  <div class="app-body">
+    <div class="app-body-navigation">
+      <nav class="navigation">
+        <div class="scene-bill">
+          <span>Table 2: 15,000</span>
+          <span> SplitWise: Yes | No </span>
+          <span> Number of Guests: 10 </span>
+          <span> Price per Guest: 1500 </span>
+        </div>
+      </nav>
+      <footer class="footer">
+        <h1>Scenes<small>©</small></h1>
+        <div>
+          Scenes ©<br />
+          All Rights Reserved 2024
+        </div>
+      </footer>
+    </div>
+
+    <!--    main body content-->
+    <div class="app-body-main-content">
+      <section class="service-section">
+        <h2>Build Your Scene</h2>
+
+        <!--        where all the establishments will go-->
+        <div class="tiles">
+          <div class="tile">
+            <h2 class="est-name"> {{establishment?.name }}</h2>
+            <div class="content-container">
+              <div class="image-container">
+                <img [src]="establishment?.imageUrl" alt="{{ establishment?.name }}">
+              </div>
+              <div class="details-container">
+                <h4 class="est-rating"> ★ {{establishment?.rating }}</h4>
+                <h4 class="est-cuisine"> 🍽️ {{establishment?.cuisine }}</h4>
+                <h4 class="est-area"> 📍 {{ establishment?.area }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scene-builder">
+        <div class="scene-title">
+          <h4 class="scene-title"> The Scene </h4>
+        </div>
+        <div class="scene-details">
+          <div class="package-column">
+            <h2 class="package">
+              Table 2
+            </h2>
+          </div>
+          <div class="guest-list-column">
+            <h2 class="guestList">
+              <ul>
+                <li>Faisal</li>
+                <li>Pranav</li>
+                <li>Udit</li>
+              </ul>
+
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <section class="transfer-section">
+        <div class="transfer-section-header">
+          <h2>Packages</h2>
+        </div>
+        <div class="packages">
+          <div class="packageList" *ngFor="let myPackage of packageList">
+            <div class="package-card-container">
+              <div class="package-card-content" (click)="addPackageToScene(myPackage)">
+                <div class="package-title">
+                  <h4> {{myPackage.type}}</h4>
+                </div>
+                <div class="package-general-details">
+                  <h5 class="package-amount"> {{myPackage.amount}} INR/-</h5>
+                  <h5 class="package-maxAvailable"> Entries Available: {{myPackage.maximumAvailable}}</h5>
+                </div>
+                <div class="package-description">
+                  <h5 class="package-description"> {{myPackage.description?.toUpperCase()}}</h5>
+                  <h5 *ngIf="myPackage.type == 'Table'" class="package-maxCapacity"> Max Per Table: {{myPackage.maxCapacity}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!--    right sidebar-->
+    <div class="app-body-sidebar">
+      <section class="payment-section">
+        <h2>Invite Friends</h2>
+        <div class="payment-section-header">
+          <p>BeReal Username</p>
+          <div>
+
+          </div>
+        </div>
+        <div class="payments">
+          <div class="payment" *ngFor="let friend of friendList">
+            <button class="friend-profile">
+              <span>
+                <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
+                {{friend.friendFirstName?.toUpperCase()}} {{friend.friendLastName?.toUpperCase()}}
+              </span>
+            </button>
+            <button class="invite-btn"> INVITE </button>
+          </div>
+        </div>
+
+
+      </section>
+    </div>
+
+
+  </div>
+</div>
