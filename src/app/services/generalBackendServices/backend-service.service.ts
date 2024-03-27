@@ -48,7 +48,8 @@ export class BackendServiceService {
       dob: data.dob,
       username: data.username,
       authorities: data.authorities,
-      accountNonLocked: data.accountNonLocked
+      accountNonLocked: data.accountNonLocked,
+      male: data.male
     };
   }
 
@@ -84,6 +85,12 @@ export class BackendServiceService {
 
   findUserById(id?: number): Observable<User>{
     return this.http.get(`${this.apiUrl}/user/controller/findById/${id}`).pipe(
+      map((data: any) => this.mapToUser(data))
+    );
+  }
+
+  getAllUsers(): Observable<User>{
+    return this.http.get(`${this.apiUrl}/user/controller/findAll`).pipe(
       map((data: any) => this.mapToUser(data))
     );
   }

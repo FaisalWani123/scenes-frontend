@@ -504,45 +504,6 @@ a {
 }
 
 
-
-/*.packages {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  margin-top: 1.5rem;*/
-/*}*/
-
-/*.packageList {*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  width: 100%;*/
-/*  font-size: 0.875rem;*/
-/*}*/
-
-/*.package-details {*/
-/*  background: rgba(255,255,255,0.1);*/
-/*  padding-left: 10px;*/
-/*  padding-right: 10px;*/
-/*  padding-top: 10px;*/
-/*  padding-bottom: 10px;*/
-/*  border-radius: 20px;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: space-between;*/
-
-/*  div{*/
-/*    border-right: white 1px solid;*/
-/*  }*/
-
-/*  flex: 1;*/
-
-/*  h4{*/
-/*    color: white;*/
-/*    padding-right: 15px;*/
-
-/*  }*/
-
-/*}*/
-
 .packages {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust as needed */
@@ -553,18 +514,17 @@ a {
   /*background-color: #f4f4f4; !* Change background color as needed *!*/
   border-radius: 10px;
   display: grid;
-
 }
 
 .package-card-container {
   padding: 10px;
+  height: 100%;
   background: rgba(255,255,255);
   border-radius: 10px;
-  max-height: 135px;
+  /*max-height: 135px;*/
   &:hover{
     /*box-shadow: 4px 4px 8px rgba(255, 255, 255, 1);*/
     border-radius: 30px;
-    /*transform: scale(1.05);*/
     background: white;
     cursor: pointer;
   }
@@ -589,7 +549,6 @@ a {
 .package-general-details {
   display: flex;
   justify-content: space-evenly;
-  /*margin-bottom: 10px;*/
 }
 
 .package-general-details h5 {
@@ -597,15 +556,15 @@ a {
   font-family: Monaco;
   font-size: 16px;
 }
-.package-description{
-
+.package-description {
+  flex-grow: 1; /* Ensure the description takes up remaining space */
+  overflow: hidden; /* Hide overflow */
 }
 .package-description h5 {
   color: black; /* Description color */
   text-align: center;
   font-family: Monaco;
   font-size: 14px;
-  /*margin-bottom: 10px;*/
 }
 
 
@@ -785,10 +744,12 @@ label{
 .tiles {
   background: transparent;
   border-radius: 15px;
+  align-items: center;
+  max-width: 95%;
 }
 
 .tile {
-  max-width: 700px;
+
   .content-container{
     /*max-width: 95%;*/
     background: rgba(255,255,255,0.05);
@@ -901,8 +862,8 @@ label{
 }
 
 .scene-builder {
-  margin-left: 10%;
-  max-width: 75%;
+  /*margin-left: 10%;*/
+  max-width: 90%;
   background: rgba(255,255,255, 0.05);
   border-radius: 25px;
   background-blend-mode: luminosity;
@@ -924,14 +885,114 @@ label{
 
 .scene-details {
   display: flex;
-  justify-content: space-between; /* Separate into two columns */
-  width: 50%; /* Adjust width as needed */
+  /*justify-content: space-between; !* Separate into two columns *!*/
+  width: 100%; /* Adjust width as needed */
+  column-gap: 50px;
+  .package-card-container{
+    display: block;
+    height: 135px;
+    max-width: 100%;
+    &:hover{
+      border-radius: 10px;
+    }
+  }
 }
 
-.package-column,
-.guest-list-column {
-  width: 45%; /* Adjust column width as needed */
+.package-column{
+  max-width: 45%;
 }
+
+
+.guest-list-column {
+  justify-content: left;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 10px; /* Adjust spacing between columns */
+  max-width: 500px; /* Adjust column width as needed */
+}
+
+.guest-list-iteration {
+  padding: 5px 0;
+  max-width: calc(50% - 5px); /* Set maximum width for each column */
+}
+
+.guest-names {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Monaco;
+  color: white; /* Adjust color as needed */
+}
+
+.guest-names ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guest-names ul li {
+  width: fit-content;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.guest-names ul li:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 0, 0, 0.2); /* Adjust hover color as needed */
+  border-radius: 10px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.toggle-input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+.toggle-input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+
 
 
 

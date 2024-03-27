@@ -59,10 +59,26 @@
     <div class="app-body-navigation">
       <nav class="navigation">
         <div class="scene-bill">
-          <span>Table 2: 15,000</span>
-          <span> SplitWise: Yes | No </span>
-          <span> Number of Guests: 10 </span>
-          <span> Price per Guest: 1500 </span>
+          <div class="splitwise-boolean">
+            <h4> SplitWise </h4>
+            <label class="toggle-switch">
+              <input type="checkbox" class="toggle-input" [(ngModel)]="toggleval">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="amount">
+            <h4> Total Amount</h4>
+            <h5> {{sceneBill.totalAmount}} </h5>
+          </div>
+          <div class="guestNumber">
+            <h4> Number of Guests </h4>
+            <h5>{{sceneBill.numberofGuests}}</h5>
+          </div>
+          <div *ngIf="toggleval" class="price-per-guest">
+            <h4>Price Per Guest</h4>
+            <h5>{{ sceneBill.pricePerGuest }}</h5>
+          </div>
+
         </div>
       </nav>
       <footer class="footer">
@@ -79,7 +95,7 @@
       <section class="service-section">
         <h2>Build Your Scene</h2>
 
-        <!--        where all the establishments will go-->
+        <!--where all the establishments will go-->
         <div class="tiles">
           <div class="tile">
             <h2 class="est-name"> {{establishment?.name }}</h2>
@@ -103,20 +119,35 @@
         </div>
         <div class="scene-details">
           <div class="package-column">
-            <h2 class="package">
-              Table 2
-            </h2>
+            <div class="package-card-container"  *ngIf="sceneBuilder.myPackage != null">
+              <div class="package-card-content">
+                <div class="package-title">
+                  <h4> {{ sceneBuilder.myPackage?.type }}</h4>
+                </div>
+                <div class="package-general-details">
+                  <h5 class="package-amount"> {{sceneBuilder?.myPackage?.amount}} INR/-</h5>
+                  <h5 class="package-maxAvailable"> Entries Available: {{sceneBuilder?.myPackage?.maximumAvailable}}</h5>
+                </div>
+                <div class="package-description">
+                  <h5 class="package-description"> {{sceneBuilder?.myPackage?.description?.toUpperCase()}}</h5>
+                  <h5 *ngIf="sceneBuilder.myPackage?.type == 'Table'" class="package-maxCapacity"> Max Per Table: {{sceneBuilder.myPackage?.maxCapacity}}</h5>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="guest-list-column">
-            <h2 class="guestList">
-              <ul>
-                <li>Faisal</li>
-                <li>Pranav</li>
-                <li>Udit</li>
-              </ul>
-
-            </h2>
+            <div class="guest-list-iteration" *ngFor="let friend of guestList">
+              <h2 class="guest-names">
+                <ul>
+                  <li (click)="removeFriend(friend)">
+                    {{ capitalizeFirstLetter(friend.friendFirstName) }} {{ capitalizeFirstLetter(friend.friendLastName)}}
+                  </li>
+                </ul>
+              </h2>
+            </div>
           </div>
+
+
         </div>
       </section>
 
@@ -157,18 +188,26 @@
           </div>
         </div>
         <div class="payments">
-          <div class="payment" *ngFor="let friend of friendList">
+          <div class="search-field">
+            <i class="ph-magnifying-glass"></i>
+            <input type="text" placeholder="Search" style="color: white; text-transform: uppercase;" [(ngModel)]="searchTerm" (input)="filterFriendList()">
+          </div>
+          <div class="payment" *ngFor="let friend of filteredFriendList">
             <button class="friend-profile">
               <span>
                 <img src="https://assets.codepen.io/285131/almeria-avatar.jpeg" />
                 {{friend.friendFirstName?.toUpperCase()}} {{friend.friendLastName?.toUpperCase()}}
               </span>
             </button>
-            <button class="invite-btn"> INVITE </button>
+            <button class="invite-btn" (click)="addFriendToGuestList(friend)" [disabled]="friend.invited">
+              {{ friend.invited ? 'INVITED' : 'INVITE' }}
+            </button>
           </div>
+          <mat-paginator [length]="filteredFriendList.length"
+                         [pageSize]="pageSize"
+                         (page)="onPageChange($event)">
+          </mat-paginator>
         </div>
-
-
       </section>
     </div>
 

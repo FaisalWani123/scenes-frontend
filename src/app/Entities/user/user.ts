@@ -1,3 +1,5 @@
+import {FriendRequestManager} from '../friend/friendRequestManager/friend-request-manager';
+
 export class User {
   id?: number;
   firstName?: string;
@@ -13,6 +15,8 @@ export class User {
   username?: string;
   authorities?: Authority[];
   accountNonLocked?: boolean;
+  male?: boolean;
+  requestManager?: FriendRequestManager;
 }
 
 export interface Authority {

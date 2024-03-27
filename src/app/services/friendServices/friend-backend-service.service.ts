@@ -22,7 +22,8 @@ export class FriendBackendServiceService {
       userFriendId: data.userFriendId,
       userId: data.userId,
       isAccepted: data.isAccepted,
-      friendsSince: data.friendsSince
+      friendsSince: data.friendsSince,
+      male: data.male
     };
   }
 
@@ -33,13 +34,6 @@ export class FriendBackendServiceService {
         map((data: any[]) => data.map(item => this.mapToFriend(item)))
       );
   }
-
-  // getFriendList(id: number | undefined): Observable<Friend[]> {
-  //   // @ts-ignore
-  //   return this.http.get<FriendListResponse>(`${this.apiUrl}/friend/controller/getFriendList/${id}`).pipe(
-  //     map(response => response.friendList)
-  //   );
-  // }
 
   getFriendList(id: number | undefined): Observable<FriendList[]> {
     // @ts-ignore

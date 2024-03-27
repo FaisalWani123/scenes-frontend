@@ -6,5 +6,6 @@ export class Friend {
   userFriendId?: number;
   isAccepted?: boolean;
   friendsSince?: string;
+  male?: boolean;
 
 }

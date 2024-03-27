@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
       firstName: ['', Validators.required],
+      male: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordMinLength(6)]],
@@ -73,7 +74,17 @@ export class RegisterComponent implements OnInit {
     this.user.email = this.myForm.get('email')?.value;
     this.user.dob = this.myForm.get('DOB')?.value;
     this.user.password = this.myForm.get('password')?.value;
+    this.user.male = this.setGender();
+    console.log(this.user);
     return this.user;
+  }
+
+  // @ts-ignore
+  setGender(): boolean{
+    if (this.myForm.get('male')?.value === 'false'){
+      return false;
+    }
+    return true;
   }
 
   // tslint:disable-next-line:typedef
@@ -82,8 +93,7 @@ export class RegisterComponent implements OnInit {
     if (this.myForm.valid){
       this.user = this.buildUser();
       this.doesUserExist();
-
-      // console.log(this.user);
+      this.registerUser();
     }else{
       console.log('please check your details');
     }

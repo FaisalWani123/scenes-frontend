@@ -8,6 +8,10 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {User} from '../Entities/user/user';
 import {map} from 'rxjs/operators';
+import {FriendList} from '../Entities/friend/friendList/friend-list';
+import {FriendBackendServiceService} from '../services/friendServices/friend-backend-service.service';
+import {GeneralErrorDialogComponent} from '../general-error-dialog/general-error-dialog.component';
+import {DialogService} from '../services/dialogServices/dialog.service';
 
 @Component({
   selector: 'app-main-page',
@@ -17,7 +21,14 @@ import {map} from 'rxjs/operators';
 export class MainPageComponent implements OnInit {
   constructor(private tokenService: TokenServiceService,
               private backendService: BackendServiceService,
-              private router: Router) { }
+              private router: Router,
+              private friendBackend: FriendBackendServiceService,
+              private dialog: DialogService) { }
+
+  get pagedEstablishments(): Establishment[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.byRating(this.filteredEstablishments).slice(startIndex, startIndex + this.pageSize);
+  }
 
   token = this.tokenService.getToken();
   email = this.tokenService.getEmail();
@@ -31,10 +42,34 @@ export class MainPageComponent implements OnInit {
   selectedOption = 'name';
   user: User | undefined;
 
+  allUserList: User[] = [];
+  // tslint:disable-next-line:typedef
+  selectedTab: string | undefined;
+  friendSearchTerm: any;
+  // tslint:disable-next-line:typedef
+  filteredFriendList: FriendList[] = [];
+  friendList: FriendList[] = [];
+  // tslint:disable-next-line:typedef
+  friendPageSize = 10;
+  friendCurrentPage = 1;
+  @ViewChild(MatPaginator) friendPaginator!: MatPaginator;
+
   ngOnInit(): void {
     this.loadData();
     this.findUserDetailsByEmail(this.email);
 
+  }
+
+  getFriendList(): void {
+    this.friendBackend.getFriendList(this.user?.id).subscribe(
+      (friends: FriendList[]) => {
+        this.friendList = friends;
+        this.filteredFriendList = this.friendList;
+      },
+      (error) => {
+        this.dialog.openGeneralErrorDialog(error);
+      }
+    );
   }
 
 
@@ -95,12 +130,6 @@ export class MainPageComponent implements OnInit {
   onPageChange(event: any): void {
     this.currentPage = event.pageIndex + 1;
   }
-
-  get pagedEstablishments(): Establishment[] {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    return this.byRating(this.filteredEstablishments).slice(startIndex, startIndex + this.pageSize);
-  }
-
   // tslint:disable-next-line:typedef
   buildScene(establishment: Establishment) {
     this.router.navigate(['/establishment-page']);
@@ -108,9 +137,39 @@ export class MainPageComponent implements OnInit {
     localStorage.setItem('establishmentid', establishment.id);
 
   }
-
   // tslint:disable-next-line:typedef
   goToSceneBuilder() {
     this.router.navigate(['/establishment-page']);
   }
+
+  // tslint:disable-next-line:typedef
+  sendFriendRequest(friend: FriendList) {
+
+  }
+
+  // tslint:disable-next-line:typedef
+  filterOtherFriendList() {
+    if (!this.friendSearchTerm || this.friendSearchTerm == null || this.friendSearchTerm === undefined){
+      this.filteredFriendList = this.friendList;
+    }
+    else{
+      // @ts-ignore
+      this.filteredFriendList = this.friendList.filter(x => x.friendFirstName?.toLowerCase().includes(this.friendSearchTerm.toLowerCase()
+        || x.friendLastName?.toLowerCase().includes(this.friendSearchTerm.toLowerCase())
+        || x.friendEmail?.toLowerCase().includes(this.friendSearchTerm.toLowerCase())));
+    }
+  }
+
+  getAllUsers(): void {
+    this.backendService.getAllUsers().subscribe(
+      // @ts-ignore
+      (users: User[]) => {
+        this.allUserList = users; // Assign the received users to allUserList
+      },
+      (error) => {
+        this.dialog.openGeneralErrorDialog('cant get users');
+      }
+    );
+  }
+
 }
